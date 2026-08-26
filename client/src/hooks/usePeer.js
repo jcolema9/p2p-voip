@@ -1,20 +1,15 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Peer from 'peerjs';
 
-// In production the client is served by the same Express server as the PeerJS
-// endpoint, so default to same-origin instead of requiring separate env vars.
+// With no host/port set, PeerJS connects to its free public signaling broker
+// (0.peerjs.com) — no self-hosted server needed, so the client can be a static site.
 const PEER_OPTS = process.env.REACT_APP_PEER_HOST
   ? {
       host: process.env.REACT_APP_PEER_HOST,
       port: Number(process.env.REACT_APP_PEER_PORT) || 9000,
       path: process.env.REACT_APP_PEER_PATH || '/peerjs',
     }
-  : {
-      host: window.location.hostname,
-      port: window.location.port ? Number(window.location.port) : (window.location.protocol === 'https:' ? 443 : 80),
-      path: '/peerjs',
-      secure: window.location.protocol === 'https:',
-    };
+  : {};
 
 // Manages a single Peer instance and the active data/media connections for one session.
 export default function usePeer() {
