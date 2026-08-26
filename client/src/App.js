@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 import Call from './components/Call';
 import { SunIcon } from './components/icons';
+import MiniGame from './components/MiniGame';
 
 function App() {
   const [identity, setIdentity] = useState(getSavedIdentity());
@@ -77,6 +78,7 @@ function App() {
           )}
         </main>
       </div>
+      <MiniGame />
     </div>
   );
 }
