@@ -19,11 +19,6 @@ function App() {
     setAutoJoinAttempted(true);
   }, [autoJoinAttempted, peerId, connectToRoom]);
 
-  const handleJoin = (roomId) => {
-    window.history.replaceState(null, '', `?room=${roomId}`);
-    connectToRoom(roomId);
-  };
-
   return (
     <div className="App">
       <header className="App-header-bar">
@@ -40,7 +35,7 @@ function App() {
             <Chat onData={onData} sendMessage={sendMessage} />
           </div>
         ) : (
-          <Landing peerId={peerId} onJoin={handleJoin} />
+          <Landing peerId={peerId} />
         )}
       </main>
     </div>

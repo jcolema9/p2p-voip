@@ -26,13 +26,13 @@ export default function Call({ onRemoteStream, hangUp }) {
   return (
     <div className="call">
       <audio ref={audioRef} autoPlay />
-      <p>{remoteConnected ? 'Voice call connected' : 'Waiting for audio…'}</p>
+      <p>{remoteConnected ? '🎙️ Voice call connected' : '⏳ Waiting for audio…'}</p>
       <div className="call-controls">
         <button type="button" onClick={toggleMute}>
-          {muted ? 'Unmute' : 'Mute'}
+          {muted ? '🔇 Unmute' : '🎤 Mute'}
         </button>
-        <button type="button" onClick={hangUp}>
-          Hang up
+        <button type="button" className="danger" onClick={hangUp}>
+          📞 Hang up
         </button>
       </div>
     </div>

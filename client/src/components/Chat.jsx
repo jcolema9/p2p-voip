@@ -27,6 +27,7 @@ export default function Chat({ onData, sendMessage }) {
   return (
     <div className="chat">
       <div className="chat-messages" ref={listRef}>
+        {messages.length === 0 && <p className="chat-empty">No messages yet — say hi 👋</p>}
         {messages.map((m, i) => (
           <div key={i} className={`chat-message chat-message--${m.from}`}>
             {m.text}
