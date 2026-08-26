@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import './App.css';
 import usePeer from './hooks/usePeer';
 import Landing from './components/Landing';
@@ -8,16 +7,6 @@ import Call from './components/Call';
 function App() {
   const { peerId, status, errorMessage, isConnected, connectToRoom, sendMessage, onData, onRemoteStream, hangUp } =
     usePeer();
-  const [autoJoinAttempted, setAutoJoinAttempted] = useState(false);
-
-  useEffect(() => {
-    if (autoJoinAttempted || !peerId) return;
-    const roomId = new URLSearchParams(window.location.search).get('room');
-    if (roomId && roomId !== peerId) {
-      connectToRoom(roomId);
-    }
-    setAutoJoinAttempted(true);
-  }, [autoJoinAttempted, peerId, connectToRoom]);
 
   return (
     <div className="App">
@@ -35,7 +24,7 @@ function App() {
             <Chat onData={onData} sendMessage={sendMessage} />
           </div>
         ) : (
-          <Landing peerId={peerId} />
+          <Landing peerId={peerId} onConnect={connectToRoom} />
         )}
       </main>
     </div>
