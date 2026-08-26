@@ -1,32 +1,59 @@
+import { useState } from 'react';
 import './App.css';
 import usePeer from './hooks/usePeer';
-import Landing from './components/Landing';
+import SignOn, { getSavedIdentity } from './components/SignOn';
+import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 import Call from './components/Call';
 
 function App() {
-  const { peerId, status, errorMessage, isConnected, connectToRoom, sendMessage, onData, onRemoteStream, hangUp } =
-    usePeer();
+  const [identity, setIdentity] = useState(getSavedIdentity());
+  const { status, errorMessage, isConnected, callContact, sendMessage, onData, onRemoteStream, hangUp } = usePeer(
+    identity?.id
+  );
+  const [activeContactId, setActiveContactId] = useState(null);
+
+  if (!identity) {
+    return (
+      <div className="App">
+        <header className="App-header-bar">
+          <h1>P2P Connect</h1>
+        </header>
+        <main className="App-main">
+          <SignOn onSignIn={setIdentity} />
+        </main>
+      </div>
+    );
+  }
+
+  const handleCall = (contactId) => {
+    setActiveContactId(contactId);
+    callContact(contactId);
+  };
 
   return (
-    <div className="App">
+    <div className="App App--with-sidebar">
       <header className="App-header-bar">
         <h1>P2P Connect</h1>
+        <span className="status status--signed-in">{identity.name}</span>
         <span className={`status status--${status}`}>{status}</span>
       </header>
 
       {errorMessage && <div className="error-banner">{errorMessage}</div>}
 
-      <main className="App-main">
-        {isConnected ? (
-          <div className="room">
-            <Call onRemoteStream={onRemoteStream} hangUp={hangUp} />
-            <Chat onData={onData} sendMessage={sendMessage} />
-          </div>
-        ) : (
-          <Landing peerId={peerId} onConnect={connectToRoom} />
-        )}
-      </main>
+      <div className="App-body">
+        <Sidebar selfId={identity.id} onCall={handleCall} activeContactId={activeContactId} />
+        <main className="App-main">
+          {isConnected ? (
+            <div className="room">
+              <Call onRemoteStream={onRemoteStream} hangUp={hangUp} />
+              <Chat onData={onData} sendMessage={sendMessage} />
+            </div>
+          ) : (
+            <p className="call-placeholder">Select a contact on the left to call them.</p>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

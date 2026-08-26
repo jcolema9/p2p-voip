@@ -37,7 +37,8 @@ const PEER_OPTS = process.env.REACT_APP_PEER_HOST
   : { config: ICE_SERVERS };
 
 // Manages a single Peer instance and the active data/media connections for one session.
-export default function usePeer() {
+// selfId is the caller-chosen identity (from sign-on); the Peer isn't created until it's set.
+export default function usePeer(selfId) {
   const peerRef = useRef(null);
   const [peerId, setPeerId] = useState(null);
   const [status, setStatus] = useState('idle'); // idle | connecting | connected | disconnected | error
@@ -48,14 +49,16 @@ export default function usePeer() {
   const callHandlersRef = useRef(null);
 
   useEffect(() => {
-    const peer = new Peer(PEER_OPTS);
+    if (!selfId) return;
+
+    const peer = new Peer(selfId, PEER_OPTS);
     peerRef.current = peer;
 
     peer.on('open', (id) => setPeerId(id));
 
     peer.on('error', (err) => {
       console.error('Peer error', err);
-      setErrorMessage(err.message || 'Connection error');
+      setErrorMessage(err.type === 'peer-unavailable' ? 'That person is not online right now.' : err.message || 'Connection error');
       setStatus('error');
     });
 
@@ -78,7 +81,7 @@ export default function usePeer() {
       peer.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selfId]);
 
   const attachDataConnection = useCallback((conn) => {
     conn.on('open', () => {
@@ -106,17 +109,18 @@ export default function usePeer() {
     setMediaConnection(call);
   }, []);
 
-  const connectToRoom = useCallback(
-    (roomId) => {
+  const callContact = useCallback(
+    (contactId) => {
+      setErrorMessage(null);
       setStatus('connecting');
       const peer = peerRef.current;
-      const conn = peer.connect(roomId, { reliable: true });
+      const conn = peer.connect(contactId, { reliable: true });
       attachDataConnection(conn);
 
       navigator.mediaDevices
         .getUserMedia({ audio: true })
         .then((stream) => {
-          const call = peer.call(roomId, stream);
+          const call = peer.call(contactId, stream);
           attachMediaConnection(call);
         })
         .catch((err) => {
@@ -153,7 +157,7 @@ export default function usePeer() {
     status,
     errorMessage,
     isConnected: !!dataConnection,
-    connectToRoom,
+    callContact,
     sendMessage,
     onData,
     onRemoteStream,
