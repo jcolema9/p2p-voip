@@ -3,13 +3,35 @@ import Peer from 'peerjs';
 
 // STUN alone only works when at least one side has an open/simple NAT; a TURN relay
 // is needed when both peers are behind restrictive NATs/firewalls (e.g. different networks).
+// These are long-circulated public demo TURN credentials with no uptime guarantee —
+// listed as fallbacks so ICE can try each and use whichever still responds.
 const ICE_SERVERS = {
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' },
     {
+      urls: 'turn:numb.viagenie.ca',
+      username: 'webrtc@live.com',
+      credential: 'muazkh',
+    },
+    {
+      urls: 'turn:192.158.29.39:3478?transport=udp',
+      username: '28224511:1379330808',
+      credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+    },
+    {
+      urls: 'turn:192.158.29.39:3478?transport=tcp',
+      username: '28224511:1379330808',
+      credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+    },
+    {
       urls: 'turn:turn.bistri.com:80',
       username: 'homeo',
       credential: 'homeo',
+    },
+    {
+      urls: 'turn:turn.anyfirewall.com:443?transport=tcp',
+      username: 'webrtc',
+      credential: 'webrtc',
     },
   ],
 };
