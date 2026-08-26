@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/p2p-voip/static/css/main.074f9d54.css",
-    "main.js": "/p2p-voip/static/js/main.e61ca569.js",
+    "main.css": "/p2p-voip/static/css/main.d435e8be.css",
+    "main.js": "/p2p-voip/static/js/main.e84bc1f0.js",
     "static/js/453.6a44dda7.chunk.js": "/p2p-voip/static/js/453.6a44dda7.chunk.js",
     "index.html": "/p2p-voip/index.html",
-    "main.074f9d54.css.map": "/p2p-voip/static/css/main.074f9d54.css.map",
-    "main.e61ca569.js.map": "/p2p-voip/static/js/main.e61ca569.js.map",
+    "main.d435e8be.css.map": "/p2p-voip/static/css/main.d435e8be.css.map",
+    "main.e84bc1f0.js.map": "/p2p-voip/static/js/main.e84bc1f0.js.map",
     "453.6a44dda7.chunk.js.map": "/p2p-voip/static/js/453.6a44dda7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.074f9d54.css",
-    "static/js/main.e61ca569.js"
+    "static/css/main.d435e8be.css",
+    "static/js/main.e84bc1f0.js"
   ]
 }
