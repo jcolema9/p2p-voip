@@ -3,35 +3,29 @@ import Peer from 'peerjs';
 
 // STUN alone only works when at least one side has an open/simple NAT; a TURN relay
 // is needed when both peers are behind restrictive NATs/firewalls (e.g. different networks).
-// These are long-circulated public demo TURN credentials with no uptime guarantee —
-// listed as fallbacks so ICE can try each and use whichever still responds.
+// Using our Metered.ca TURN app credentials (maintained, reliable — not a public demo server).
 const ICE_SERVERS = {
   iceServers: [
-    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun.relay.metered.ca:80' },
     {
-      urls: 'turn:numb.viagenie.ca',
-      username: 'webrtc@live.com',
-      credential: 'muazkh',
+      urls: 'turn:standard.relay.metered.ca:80',
+      username: '3902d1394c4d977e00de6773',
+      credential: '1MbNHBZklunFc8LD',
     },
     {
-      urls: 'turn:192.158.29.39:3478?transport=udp',
-      username: '28224511:1379330808',
-      credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+      urls: 'turn:standard.relay.metered.ca:80?transport=tcp',
+      username: '3902d1394c4d977e00de6773',
+      credential: '1MbNHBZklunFc8LD',
     },
     {
-      urls: 'turn:192.158.29.39:3478?transport=tcp',
-      username: '28224511:1379330808',
-      credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+      urls: 'turn:standard.relay.metered.ca:443',
+      username: '3902d1394c4d977e00de6773',
+      credential: '1MbNHBZklunFc8LD',
     },
     {
-      urls: 'turn:turn.bistri.com:80',
-      username: 'homeo',
-      credential: 'homeo',
-    },
-    {
-      urls: 'turn:turn.anyfirewall.com:443?transport=tcp',
-      username: 'webrtc',
-      credential: 'webrtc',
+      urls: 'turns:standard.relay.metered.ca:443?transport=tcp',
+      username: '3902d1394c4d977e00de6773',
+      credential: '1MbNHBZklunFc8LD',
     },
   ],
 };
