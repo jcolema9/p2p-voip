@@ -1,4 +1,5 @@
 import { CONTACTS } from '../data/contacts';
+import { PhoneIcon, MessageIcon } from './icons';
 
 // Shows other known contacts; hovering a name reveals call/message icon buttons.
 export default function Sidebar({ selfId, onCall, onMessage, activeContactId }) {
@@ -22,7 +23,7 @@ export default function Sidebar({ selfId, onCall, onMessage, activeContactId }) 
                 aria-label={`Call ${contact.name}`}
                 onClick={() => onCall(contact.id)}
               >
-                📞
+                <PhoneIcon />
               </button>
               <button
                 type="button"
@@ -31,7 +32,7 @@ export default function Sidebar({ selfId, onCall, onMessage, activeContactId }) 
                 aria-label={`Message ${contact.name}`}
                 onClick={() => onMessage(contact.id)}
               >
-                💬
+                <MessageIcon />
               </button>
             </span>
           </li>
