@@ -8,9 +8,18 @@ import Call from './components/Call';
 
 function App() {
   const [identity, setIdentity] = useState(getSavedIdentity());
-  const { status, errorMessage, isConnected, callContact, sendMessage, onData, onRemoteStream, hangUp } = usePeer(
-    identity?.id
-  );
+  const {
+    status,
+    errorMessage,
+    isConnected,
+    isCallActive,
+    callContact,
+    messageContact,
+    sendMessage,
+    onData,
+    onRemoteStream,
+    hangUp,
+  } = usePeer(identity?.id);
   const [activeContactId, setActiveContactId] = useState(null);
 
   if (!identity) {
@@ -31,6 +40,11 @@ function App() {
     callContact(contactId);
   };
 
+  const handleMessage = (contactId) => {
+    setActiveContactId(contactId);
+    messageContact(contactId);
+  };
+
   return (
     <div className="App App--with-sidebar">
       <header className="App-header-bar">
@@ -42,15 +56,15 @@ function App() {
       {errorMessage && <div className="error-banner">{errorMessage}</div>}
 
       <div className="App-body">
-        <Sidebar selfId={identity.id} onCall={handleCall} activeContactId={activeContactId} />
+        <Sidebar selfId={identity.id} onCall={handleCall} onMessage={handleMessage} activeContactId={activeContactId} />
         <main className="App-main">
           {isConnected ? (
             <div className="room">
-              <Call onRemoteStream={onRemoteStream} hangUp={hangUp} />
+              {isCallActive && <Call onRemoteStream={onRemoteStream} hangUp={hangUp} />}
               <Chat onData={onData} sendMessage={sendMessage} />
             </div>
           ) : (
-            <p className="call-placeholder">Select a contact on the left to call them.</p>
+            <p className="call-placeholder">Hover a contact on the left to call or message them.</p>
           )}
         </main>
       </div>

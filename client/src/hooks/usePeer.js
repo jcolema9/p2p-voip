@@ -136,6 +136,18 @@ export default function usePeer(selfId) {
     [attachDataConnection, attachMediaConnection]
   );
 
+  // Text-only connection — opens a data channel without requesting the mic or placing a call.
+  const messageContact = useCallback(
+    (contactId) => {
+      setErrorMessage(null);
+      setStatus('connecting');
+      const peer = peerRef.current;
+      const conn = peer.connect(contactId, { reliable: true });
+      attachDataConnection(conn);
+    },
+    [attachDataConnection]
+  );
+
   const sendMessage = useCallback(
     (message) => {
       dataConnection?.send(message);
@@ -162,7 +174,9 @@ export default function usePeer(selfId) {
     status,
     errorMessage,
     isConnected: !!dataConnection,
+    isCallActive: !!mediaConnection,
     callContact,
+    messageContact,
     sendMessage,
     onData,
     onRemoteStream,

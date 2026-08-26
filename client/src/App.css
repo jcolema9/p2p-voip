@@ -123,21 +123,50 @@ body {
   gap: 0.4rem;
 }
 
-.contact-button {
-  width: 100%;
-  text-align: left;
+.contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
   background: var(--card-bg-soft);
   color: var(--text);
   font-weight: 500;
 }
 
-.contact-button:hover {
+.contact-row:hover,
+.contact-row--active {
   background: var(--border);
 }
 
-.contact-button--active {
+.contact-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 0.3rem;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.contact-row:hover .contact-actions,
+.contact-row:focus-within .contact-actions {
+  opacity: 1;
+}
+
+.icon-button {
+  padding: 0.25rem 0.4rem;
+  font-size: 0.9rem;
+  line-height: 1;
   background: var(--accent);
-  color: var(--text);
+}
+
+.icon-button:hover {
+  background: var(--accent-hover);
 }
 
 .call-placeholder {
