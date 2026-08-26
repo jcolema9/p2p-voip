@@ -3,6 +3,6 @@ import App from './App';
 
 test('renders app title', () => {
   render(<App />);
-  const titleElement = screen.getByText(/p2p connect/i);
+  const titleElement = screen.getByText(/harmony/i);
   expect(titleElement).toBeInTheDocument();
 });

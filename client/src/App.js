@@ -26,7 +26,7 @@ function App() {
     return (
       <div className="App">
         <header className="App-header-bar">
-          <h1>P2P Connect</h1>
+          <h1>Harmony</h1>
         </header>
         <main className="App-main">
           <SignOn onSignIn={setIdentity} />
@@ -48,7 +48,7 @@ function App() {
   return (
     <div className="App App--with-sidebar">
       <header className="App-header-bar">
-        <h1>P2P Connect</h1>
+        <h1>Harmony</h1>
         <span className="status status--signed-in">{identity.name}</span>
         <span className={`status status--${status}`}>{status}</span>
       </header>
