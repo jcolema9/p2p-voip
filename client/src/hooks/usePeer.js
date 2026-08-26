@@ -1,40 +1,16 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Peer from 'peerjs';
 
-// STUN alone only works when at least one side has an open/simple NAT; a TURN relay
-// is needed when both peers are behind restrictive NATs/firewalls (e.g. different networks).
-// Using Open Relay Project's free public TURN servers since no self-hosted TURN is set up.
-const ICE_SERVERS = {
-  iceServers: [
-    { urls: 'stun:stun.l.google.com:19302' },
-    {
-      urls: 'turn:openrelay.metered.ca:80',
-      username: 'openrelayproject',
-      credential: 'openrelayproject',
-    },
-    {
-      urls: 'turn:openrelay.metered.ca:443',
-      username: 'openrelayproject',
-      credential: 'openrelayproject',
-    },
-    {
-      urls: 'turn:openrelay.metered.ca:443?transport=tcp',
-      username: 'openrelayproject',
-      credential: 'openrelayproject',
-    },
-  ],
-};
-
 // With no host/port set, PeerJS connects to its free public signaling broker
 // (0.peerjs.com) — no self-hosted server needed, so the client can be a static site.
+// No custom ICE config — using PeerJS's default STUN servers.
 const PEER_OPTS = process.env.REACT_APP_PEER_HOST
   ? {
       host: process.env.REACT_APP_PEER_HOST,
       port: Number(process.env.REACT_APP_PEER_PORT) || 9000,
       path: process.env.REACT_APP_PEER_PATH || '/peerjs',
-      config: ICE_SERVERS,
     }
-  : { config: ICE_SERVERS };
+  : {};
 
 // Manages a single Peer instance and the active data/media connections for one session.
 // selfId is the caller-chosen identity (from sign-on); the Peer isn't created until it's set.
