@@ -5,6 +5,7 @@ import SignOn, { getSavedIdentity } from './components/SignOn';
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 import Call from './components/Call';
+import { SunIcon } from './components/icons';
 
 function App() {
   const [identity, setIdentity] = useState(getSavedIdentity());
@@ -26,7 +27,10 @@ function App() {
     return (
       <div className="App">
         <header className="App-header-bar">
-          <h1>Harmony</h1>
+          <div className="App-brand">
+            <SunIcon />
+            <h1>Harmony</h1>
+          </div>
         </header>
         <main className="App-main">
           <SignOn onSignIn={setIdentity} />
@@ -48,9 +52,14 @@ function App() {
   return (
     <div className="App App--with-sidebar">
       <header className="App-header-bar">
-        <h1>Harmony</h1>
-        <span className="status status--signed-in">{identity.name}</span>
-        <span className={`status status--${status}`}>{status}</span>
+        <div className="App-brand">
+          <SunIcon />
+          <h1>Harmony</h1>
+        </div>
+        <div className="App-statuses">
+          <span className="status status--signed-in">{identity.name}</span>
+          <span className={`status status--${status}`}>{status}</span>
+        </div>
       </header>
 
       {errorMessage && <div className="error-banner">{errorMessage}</div>}

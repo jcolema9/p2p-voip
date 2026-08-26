@@ -41,10 +41,22 @@ body {
   margin-bottom: 1.25rem;
 }
 
+.App-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.App-statuses {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .App-header-bar h1 {
   color: var(--text);
   font-size: 2.4rem;
-  margin: 0 auto 0 0;
+  margin: 0;
   letter-spacing: -0.02em;
 }
 
